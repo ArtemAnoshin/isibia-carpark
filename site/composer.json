@@ -1,0 +1,15 @@
+{
+    "name": "isibia/carpark",
+    "autoload": {
+        "psr-4": {
+            "Isibia\\Carpark\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Artem Anoshin",
+            "email": "artem-anoshin@yandex.ru"
+        }
+    ],
+    "require": {}
+}
