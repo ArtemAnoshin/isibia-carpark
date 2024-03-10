@@ -6,8 +6,10 @@ use Isibia\Carpark\Entity\Employee\Phone;
 
 class Phones
 {
+    private array $phones = [];
+
     public function __construct(
-        private array $phones
+        array $phones
     ) {
         if (!$phones) {
             throw new \DomainException('Employee must contain at least one phone.');
@@ -25,6 +27,7 @@ class Phones
                 throw new \DomainException('Phone already exists.');
             }
         }
+
         $this->phones[] = $phone;
     }
 

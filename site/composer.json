@@ -2,7 +2,8 @@
     "name": "isibia/carpark",
     "autoload": {
         "psr-4": {
-            "Isibia\\Carpark\\": "src/"
+            "Isibia\\Carpark\\": "src/",
+            "Isibia\\Tests\\": "tests/"
         }
     },
     "authors": [
