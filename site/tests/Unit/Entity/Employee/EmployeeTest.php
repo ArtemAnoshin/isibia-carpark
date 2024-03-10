@@ -6,6 +6,7 @@ use Isibia\Carpark\Entity\Employee\Address;
 use PHPUnit\Framework\TestCase;
 use Isibia\Carpark\Entity\Employee\Employee;
 use Isibia\Carpark\Entity\Employee\Events\EmployeeCreated;
+use Isibia\Carpark\Entity\Employee\Events\EmployeeRenamed;
 use Isibia\Carpark\Entity\Employee\Id;
 use Isibia\Carpark\Entity\Employee\Name;
 use Isibia\Carpark\Entity\Employee\Phone;
@@ -98,5 +99,61 @@ class EmployeeTest extends TestCase
                 ),
             ],
         );
+    }
+
+    public function testRenameEmployee()
+    {
+        $id = Id::next();
+        $name = new Name(
+            first: 'Artem',
+            middle: 'Vladimirovitch',
+            last: 'Anoshin',
+        );
+        $address = new Address(
+            country: 'Russia',
+            region: 'Saratovskaya oblast',
+            city: 'Balakovo',
+            street: 'Lenina',
+            house: '50',
+            appartment: '25',
+        );
+        $phones = new Phones(
+            [
+                new Phone(
+                    country: '+7',
+                    code: '958',
+                    number: '965 87 45',
+                ),
+                new Phone(
+                    country: '+7',
+                    code: '937',
+                    number: '974 64 02',
+                ),
+            ],
+        );
+        $createdDate = new \DateTimeImmutable();
+
+        $employee = new Employee(
+            id: $id,
+            name: $name,
+            address: $address,
+            phones: $phones,
+            createDate: $createdDate,
+        );
+
+        $newName = new Name(
+            first: 'Igor',
+            middle: 'Petrovitch',
+            last: 'Vasiliev',
+        );
+
+        $employee->rename($newName);
+
+        $events = $employee->releaseEvents();
+
+        $this->assertEquals($newName, $employee->getName());
+
+        $this->assertNotEmpty($events);
+        $this->assertInstanceOf(EmployeeRenamed::class, end($events));
     }
 }
