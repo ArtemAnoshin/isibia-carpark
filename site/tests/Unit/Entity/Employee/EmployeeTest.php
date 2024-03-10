@@ -70,4 +70,33 @@ class EmployeeTest extends TestCase
         $this->assertNotEmpty($events);
         $this->assertInstanceOf(EmployeeCreated::class, end($events));
     }
+
+    public function testCreateNewUserWithoutPhone()
+    {
+        $this->expectExceptionMessage('Employee must contain at least one phone.');
+
+        new Phones(
+            [],
+        );
+    }
+
+    public function testCreateNewUserWithTheSamePhones()
+    {
+        $this->expectExceptionMessage('Phone already exists.');
+
+        new Phones(
+            [
+                new Phone(
+                    country: '+7',
+                    code: '958',
+                    number: '965 87 45',
+                ),
+                new Phone(
+                    country: '+7',
+                    code: '958',
+                    number: '965 87 45',
+                ),
+            ],
+        );
+    }
 }
